@@ -1,0 +1,108 @@
+1.TWO SUM:
+
+ class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        num_to_index = {}
+
+        for i, num in enumerate(nums):
+            complement = target - num
+            if complement in num_to_index:
+                return [num_to_index[complement], i]
+            num_to_index[num] = i
+
+2.ADD TWO NUMBERS:
+
+       class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: Optional[ListNode]
+        :type l2: Optional[ListNode]
+        :rtype: Optional[ListNode]
+        """
+        dummy = ListNode(0)
+        current = dummy
+        carry = 0
+
+        while l1 or l2 or carry:
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            total = val1 + val2 + carry
+            carry = total // 10
+            current.next = ListNode(total % 10)
+            current = current.next
+
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
+
+        return dummy.next
+
+
+3.LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS:
+
+   class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        char_set = set()
+        left = 0
+        max_length = 0
+
+        for right in range(len(s)):
+            # If character is already in the set, remove from the left
+            while s[right] in char_set:
+                char_set.remove(s[left])
+                left += 1
+
+            # Add the new character and update the max length
+            char_set.add(s[right])
+            max_length = max(max_length, right - left + 1)
+
+        return max_length
+
+4.MEDIAN OF TWO SORTED ARRAYS:
+
+    class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        # Merge the two sorted arrays
+        merged = sorted(nums1 + nums2)
+        n = len(merged)
+
+        # Find the median
+        if n % 2 == 1:
+            return float(merged[n // 2])
+        else:
+            mid1 = merged[n // 2 - 1]
+            mid2 = merged[n // 2]
+            return (mid1 + mid2) / 2.0
+5.REVERSE INTEGER:
+
+    class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        sign = -1 if x < 0 else 1
+        x_abs = abs(x)
+        reversed_num = int(str(x_abs)[::-1]) * sign
+        
+        # 32-bit integer range check
+        if reversed_num < -2**31 or reversed_num > 2**31 - 1:
+            return 0
+        return reversed_num
+
+
